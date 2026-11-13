@@ -1,0 +1,10 @@
+bin/
+obj/
+dist/
+_Release/
+*.user
+.vs/
+
+# Capturas sueltas en la raíz (pueden mostrar el escritorio). Las de la documentación van en docs/.
+/*.png
+/*.jpg

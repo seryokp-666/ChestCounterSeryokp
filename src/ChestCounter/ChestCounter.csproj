@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Windows app: the standby process has no window; the tool opens its own console (NativeConsole). -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyName>ChestCounter</AssemblyName>
+    <RootNamespace>ChestCounter</RootNamespace>
+    <Version>2.0.25</Version>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <!-- Single-file publish: the parser discovers its types by reflection, so no trimming. -->
+    <PublishTrimmed>false</PublishTrimmed>
+    <!-- Small idle footprint: workstation, non-concurrent GC (no background GC thread) and a GC that gives memory back. -->
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
+    <TieredPGO>true</TieredPGO>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(UpdateRepo)' != ''">
+    <!-- Repositorio de GitHub ("usuario/repo") del que se actualiza el exe. Lo pasa GitHub Actions con su propio
+         repositorio (-p:UpdateRepo=...): cada exe solo se actualiza desde el repositorio que lo compiló.
+         En una compilación local (build.bat) queda vacío y la app no busca actualizaciones ni usa la red. -->
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>UpdateRepo</_Parameter1>
+      <_Parameter2>$(UpdateRepo)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\FortniteReplayReader\FortniteReplayReader.csproj" />
+  </ItemGroup>
+</Project>
